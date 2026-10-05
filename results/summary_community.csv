@@ -1,0 +1,3 @@
+strategy,consumption_mwh_per_year,grid_import_mwh_per_year,grid_export_mwh_per_year,shared_energy_mwh_per_year,onsite_self_sufficiency_pct,energy_bill_eur_per_year,incentive_eur_per_year,net_cost_eur_per_year
+no_storage,858.74,568.04,129.52,51.96,33.85,91609.84,6234.59,85375.25
+rbc,858.74,518.46,74.59,23.87,39.62,84994.73,2864.76,82129.97

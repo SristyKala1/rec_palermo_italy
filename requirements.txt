@@ -1,0 +1,7 @@
+smartcer @ git+https://github.com/unisi-lab305/SmartCer
+pandas>=2.1.0
+numpy
+matplotlib
+gymnasium
+tqdm
+jupyter

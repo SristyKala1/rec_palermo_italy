@@ -1,0 +1,56 @@
+{
+  "Prosumers": {
+    "dwelling1": { 
+      "Type": "residential", 
+      "contract_power": 4.5, 
+      "Photovoltaic": { "pv_power": 3.0, "pnrr": false, "tip_base": 0.08, "tip_threshold": 0.12, "fi_zone": 0.0, "pz": true },
+      "Storage": { "capacity": 6.0, "rated_power": 3.0, "soc_min": 0.1, "efficiency": 0.95, "alfa": 0.0000001, "beta": 0.0 } 
+    },
+    "apartment_block": { 
+      "Type": "residential", 
+      "contract_power": 20.0, 
+      "Photovoltaic": { "pv_power": 15.0, "pnrr": false, "tip_base": 0.08, "tip_threshold": 0.12, "fi_zone": 0.0, "pz": true },
+      "Storage": { "capacity": 20.0, "rated_power": 10.0, "soc_min": 0.1, "efficiency": 0.95, "alfa": 0.0000001, "beta": 0.0 } 
+    },
+    "school": { 
+      "Type": "public_administration", 
+      "contract_power": 35.0, 
+      "Photovoltaic": { "pv_power": 30.0, "pnrr": false, "tip_base": 0.08, "tip_threshold": 0.12, "fi_zone": 0.0, "pz": true },
+      "Storage": { "capacity": 40.0, "rated_power": 20.0, "soc_min": 0.1, "efficiency": 0.95, "alfa": 0.0000001, "beta": 0.0 } 
+    },
+    "town_hall": { 
+      "Type": "public_administration", 
+      "contract_power": 40.0, 
+      "Photovoltaic": { "pv_power": 50.0, "pnrr": false, "tip_base": 0.08, "tip_threshold": 0.12, "fi_zone": 0.0, "pz": true },
+      "Storage": { "capacity": 60.0, "rated_power": 30.0, "soc_min": 0.1, "efficiency": 0.95, "alfa": 0.0000001, "beta": 0.0 } 
+    },
+    "factory": { 
+      "Type": "industrial", 
+      "contract_power": 150.0, 
+      "Photovoltaic": { "pv_power": 100.0, "pnrr": false, "tip_base": 0.08, "tip_threshold": 0.12, "fi_zone": 0.0, "pz": true },
+      "Storage": { "capacity": 120.0, "rated_power": 60.0, "soc_min": 0.1, "efficiency": 0.95, "alfa": 0.0000001, "beta": 0.0 } 
+    },
+    "retail_shop": { 
+      "Type": "commercial", 
+      "contract_power": 15.0, 
+      "Photovoltaic": { "pv_power": 10.0, "pnrr": false, "tip_base": 0.08, "tip_threshold": 0.12, "fi_zone": 0.0, "pz": true },
+      "Storage": { "capacity": 15.0, "rated_power": 7.5, "soc_min": 0.1, "efficiency": 0.95, "alfa": 0.0000001, "beta": 0.0 } 
+    },
+    "wholesale_biz": { 
+      "Type": "commercial", 
+      "contract_power": 30.0, 
+      "Photovoltaic": { "pv_power": 20.0, "pnrr": false, "tip_base": 0.08, "tip_threshold": 0.12, "fi_zone": 0.0, "pz": true },
+      "Storage": { "capacity": 30.0, "rated_power": 15.0, "soc_min": 0.1, "efficiency": 0.95, "alfa": 0.0000001, "beta": 0.0 } 
+    },
+    "farm": { 
+      "Type": "industrial", 
+      "contract_power": 25.0, 
+      "Photovoltaic": { "pv_power": 45.0, "pnrr": false, "tip_base": 0.08, "tip_threshold": 0.12, "fi_zone": 0.0, "pz": true },
+      "Storage": { "capacity": 40.0, "rated_power": 20.0, "soc_min": 0.1, "efficiency": 0.95, "alfa": 0.0000001, "beta": 0.0 } 
+    }
+  },
+  "Consumers": {
+    "dwelling2": { "Type": "residential", "contract_power": 6.0 }
+  },
+  "Producers": {}
+}
