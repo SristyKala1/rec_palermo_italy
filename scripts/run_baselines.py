@@ -25,32 +25,44 @@ SIM_START = "2015-01-01 00:00:00"
 SIM_END = "2020-09-30 23:00:00"
 SEED = 42
 
-CER_CONFIG = {
-    "simulation": {
-        "start": SIM_START,
-        "end": SIM_END,
-        "delta_input": "1h",
-        "delta_output": "YE",
-        "seed": SEED,
-    },
-    "reward": {
-        "type": "profit",
-        "single_agent": False,
-        "constraints": {"penalty": True, "coefficient": 0.3, "max_ratio": 0.99},
-        "scaler": {"apply": True, "clip_min": None, "clip_max": None, "reset_interval": None},
-    },
-}
+
+def make_config(start, end):
+    return {
+        "simulation": {
+            "start": start,
+            "end": end,
+            "delta_input": "1h",
+            "delta_output": "YE",
+            "seed": SEED,
+        },
+        "reward": {
+            "type": "profit",
+            "single_agent": False,
+            "constraints": {"penalty": True, "coefficient": 0.3, "max_ratio": 0.99},
+            "scaler": {"apply": True, "clip_min": None, "clip_max": None, "reset_interval": None},
+        },
+    }
+
+
+CER_CONFIG = make_config(SIM_START, SIM_END)
 
 
 class FixedRBC(StandardRBC):
-    """StandardRBC normalises its action by capacity, but the env scales actions
-    by rated power. Rescale so the requested energy is what the rule intended."""
+    """StandardRBC with two fixes. Its action is normalised by capacity but the
+    env scales actions by rated power, so rescale to the energy the rule
+    intended. And cap discharges so the SoC doesn't end below its minimum once
+    efficiency losses are counted."""
 
     def choose_actions(self, state):
         actions = super().choose_actions(state)
         for node_id, action in actions.items():
-            ratio = state[node_id]["capacity"] / state[node_id]["rated_power"]
-            actions[node_id] = np.clip(action * ratio, -1.0, 1.0).astype(np.float32)
+            s = state[node_id]
+            energy = action[0] * s["capacity"]
+            if energy < 0:
+                # discharging x kWh lowers the SoC by x / efficiency
+                eta = self.storage_node[node_id].storage.ETA
+                energy = max(energy, -max(0.0, s["soc"] - s["soc_min"]) * eta)
+            actions[node_id] = np.array([np.clip(energy / s["rated_power"], -1.0, 1.0)], dtype=np.float32)
         return actions
 
 
@@ -71,7 +83,7 @@ def run(cer, choose_actions, label):
     return cer.get_sim_results()
 
 
-def save(results, name):
+def save(results, name, config=CER_CONFIG):
     out_dir = RESULTS_DIR / name
     os.makedirs(out_dir, exist_ok=True)
     save_results_to_csv(csv_path=str(out_dir), results=results)
@@ -79,7 +91,7 @@ def save(results, name):
     with open(out_dir / "kpi.json", "w") as f:
         json.dump(kpis, f, indent=4)
     with open(out_dir / "sim_config.json", "w") as f:
-        json.dump(CER_CONFIG, f, indent=4)
+        json.dump(config, f, indent=4)
     return kpis
 
 

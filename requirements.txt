@@ -3,5 +3,7 @@ pandas>=2.1.0
 numpy
 matplotlib
 gymnasium
+stable-baselines3
 tqdm
 jupyter
+pytest
